@@ -5,13 +5,13 @@
     "adminUsername": {
       "type": "string",
       "metadata": {
-        "description": "My Username"
+        "description": "Username for the Virtual Machine."
       }
     },
     "adminPassword": {
       "type": "securestring",
       "metadata": {
-        "description": "Password for the VM ."
+        "description": "Password for the Virtual Machine."
       }
     },
     "dnsLabelPrefix": {
@@ -23,6 +23,15 @@
     "windowsOSVersion": {
       "type": "string",
       "defaultValue": "2016-Datacenter",
+      "allowedValues": [
+        "2008-R2-SP1",
+        "2012-Datacenter",
+        "2012-R2-Datacenter",
+        "2016-Nano-Server",
+        "2016-Datacenter-with-Containers",
+        "2016-Datacenter",
+        "2019-Datacenter"
+      ],
       "metadata": {
         "description": "The Windows version for the VM. This will pick a fully patched image of this given Windows version."
       }
@@ -50,13 +59,14 @@
     "subnetPrefix": "10.0.0.0/24",
     "publicIPAddressName": "myPublicIP",
     "vmName": "SimpleWinVM",
-    "virtualNetworkName": "yash_arm_temp_vm",
+    "virtualNetworkName": "MyVNET",
     "subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('virtualNetworkName'), variables('subnetName'))]",
     "networkSecurityGroupName": "default-NSG"
   },
   "resources": [
     {
       "type": "Microsoft.Storage/storageAccounts",
+      "apiVersion": "2018-11-01",
       "name": "[variables('storageAccountName')]",
       "location": "[parameters('location')]",
       "sku": {
@@ -212,4 +222,4 @@
       "value": "[reference(variables('publicIPAddressName')).dnsSettings.fqdn]"
     }
   }
-} 
+}
